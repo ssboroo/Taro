@@ -87,3 +87,5 @@ Node/Railway хувилбар `node:sqlite` ашиглана. Docker image Node 
 ### Шалгалт
 
 `npm test`: unpaid access denied, өөр дүн/валют/оператор/live mode/order metadata татгалзах, immutable spread, secret token, idempotent checkout, signature/replay timestamp, duplicate webhook, restart persistence болон тайллын хөдөлгүүрийг шалгана. Unit tests provider-ийг mock хийдэг; жинхэнэ гүйлгээг орлохгүй.
+
+Төлөөгүй дэлгэлтийн тайлал/экспорт/хэвлэх/тэмдэглэлийн хэсгийг нууна. Серверээр баталгаажсан эрхээр л хэрэгслүүдийг гаргана. Эвдэрсэн браузерын хадгалалтыг үл тоомсорлож, зөвхөн бүрэн баталгаатай бүтэцтэй дэлгэлтийг сэргээнэ.

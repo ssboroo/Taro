@@ -1,0 +1,5 @@
+import {deck} from './deck.js';
+const ids=new Set(deck.map(c=>c.id));
+export const selectionKey=r=>JSON.stringify({count:r.count,cards:r.cards.map(c=>({id:c.id,reversed:c.reversed})),significator:r.count===10?r.significator:null});
+export function validReading(r){return !!(r&&typeof r.id==='string'&&/^[a-zA-Z0-9-]{16,80}$/.test(r.id)&&typeof r.date==='string'&&Number.isFinite(Date.parse(r.date))&&[1,3,10].includes(r.count)&&typeof r.question==='string'&&r.question.length<=400&&typeof r.note==='string'&&r.note.length<=5000&&Array.isArray(r.cards)&&r.cards.length===r.count&&r.cards.every(c=>c&&ids.has(c.id)&&typeof c.reversed==='boolean')&&new Set(r.cards.map(c=>c.id)).size===r.count&&(r.count!==10||(ids.has(r.significator)&&!r.cards.some(c=>c.id===r.significator))));}
+export function parsePaymentHandles(raw){try{const data=JSON.parse(raw||'{}');if(!data||typeof data!=='object'||Array.isArray(data))return {};return Object.fromEntries(Object.entries(data).filter(([key,h])=>h&&validReading(h.reading)&&key===h.reading.id&&/^[a-zA-Z0-9-]{16,80}$/.test(h.id)&&/^[a-f0-9]{64}$/.test(h.token)));}catch{return {};}}
