@@ -1,0 +1,5 @@
+export function perspective(aspect, fov=Math.PI/4, near=.1, far=100){const f=1/Math.tan(fov/2),r=1/(near-far);return new Float32Array([f/aspect,0,0,0,0,f,0,0,0,0,(far+near)*r,-1,0,0,2*far*near*r,0]);}
+export function multiply(a,b){const out=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++)for(let k=0;k<4;k++)out[c*4+r]+=a[k*4+r]*b[c*4+k];return out;}
+export function model(x,y,z,rx,ry,rz,w,h){const cx=Math.cos(rx),sx=Math.sin(rx),cy=Math.cos(ry),sy=Math.sin(ry),cz=Math.cos(rz),sz=Math.sin(rz);const X=[cy*cz,cy*sz,-sy],Y=[sx*sy*cz-cx*sz,sx*sy*sz+cx*cz,sx*cy],Z=[cx*sy*cz+sx*sz,cx*sy*sz-sx*cz,cx*cy];return new Float32Array([X[0]*w,X[1]*w,X[2]*w,0,Y[0]*h,Y[1]*h,Y[2]*h,0,Z[0],Z[1],Z[2],0,x,y,z,1]);}
+export function project(m,x,y,w,h){const d=m[3]*x+m[7]*y+m[15];return [(m[0]*x+m[4]*y+m[12])/d*w/2+w/2,h/2-(m[1]*x+m[5]*y+m[13])/d*h/2];}
+export function insidePolygon(point,vertices){let inside=false;for(let i=0,j=vertices.length-1;i<vertices.length;j=i++){const a=vertices[i],b=vertices[j];if(((a[1]>point[1])!==(b[1]>point[1]))&&(point[0]<(b[0]-a[0])*(point[1]-a[1])/(b[1]-a[1])+a[0]))inside=!inside;}return inside;}

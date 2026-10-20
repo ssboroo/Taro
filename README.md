@@ -39,3 +39,11 @@ npm start
 ## Баталгаажуулалт
 
 `npm test` нь 78 картын бүрэн байдал, тусдаа 78 дүрслэл, давхардалгүй сонголт, төлөөлөх карт хасах, урвуу тохиргоо, санамсаргүй тооны bias арилгалтыг шалгана. `npm run check` нь JavaScript syntax шалгана.
+
+## WebGL 3D интерфэйс
+
+Нүүр хуудас: харанхуй fullscreen орон зай, том RAINY TAROT typography, гүн/хэтийн төлөвтэй 24 карт, pointer parallax. Карт сонголт: 78 картаас давхардалгүй хольсон 22 картын дэвүүр, hover өргөлт, эргэлт ба төв рүү ойртох animation, Монгол тайлал, хурдан хадгалалт. Хөдөлгөөн зогсоох товчтой.
+
+`scene.js` нь dependency-гүй native WebGL shader renderer, `scene-math.js` нь perspective/model matrix ба projected polygon hit detection. Pixel ratio 1.5-аар хязгаарлагдана; хуудас харагдахгүй үед rendering зогсоно. Зураг нэг удаа texture cache-д ачаална. Reduced motion тохиргоог хүндэтгэнэ.
+
+WebGL байхгүй эсвэл context тасарвал CSS 3D карт, ижил сонголт ба тайлал руу автоматаар шилжинэ. Шалгалтын cloud браузер WebGL context өгдөггүй байсан тул CSS 3D fallback, карт сонгох, тайлал, хайлтын урсгалыг браузерт шалгасан; GPU shader хувилбарыг WebGL дэмждэг бодит төхөөрөмж дээр дахин нягтлах шаардлагатай. Matrix projection, perspective scaling, rotated-card picking-ийн 3 тест нэмэгдсэн (нийт 9 тест).
