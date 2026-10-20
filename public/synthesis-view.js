@@ -1,8 +1,7 @@
-import {synthesize} from './synthesis.js';
 import {imageURL} from './deck.js';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
 export function renderSynthesis(container,reading,full=true){
- const s=synthesize(reading),root=el('section','synthesis');root.setAttribute('aria-label','Нэгдсэн дэлгэлтийн тайлал');
+ const s=reading.interpretation;if(!s)throw new Error('Тайллын эрхийг шалгана уу.');const root=el('section','synthesis');root.setAttribute('aria-label','Нэгдсэн дэлгэлтийн тайлал');
  root.append(el('span','eyebrow',reading.count===3?'ӨНГӨРСӨН → ОДОО → БОЛОМЖИТ ИРЭЭДҮЙ':'КЕЛЬТИЙН ЗАГАЛМАЙ / БАЙРЛАЛ БА ХОЛБООС'),el('h3','synthesis-title','Картуудын хамтдаа өгүүлэх түүх'),el('p','synthesis-lead',s.summary));
  const film=el('div','synthesis-film');for(const c of s.cards){const item=el('figure');const img=el('img',c.reversed?'reversed':'');img.src=imageURL(c.card);img.alt=c.card.name;item.append(img,el('figcaption','',`${c.index+1}. ${c.position} · ${c.reversed?'Урвуу':'Шулуун'}`));film.append(item);}root.append(film);
  if(s.significator)root.append(el('p','muted','Төлөөлөх карт · '+s.significator.name+' — үндсэн 10 картын тоонд ороогүй.'));

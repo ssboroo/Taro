@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {mkdtempSync,mkdirSync,cpSync,writeFileSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+test('production Worker bundles assets and keeps synthesis and server code private',async()=>{const dir=mkdtempSync(join(tmpdir(),'tarot-worker-'));try{for(const folder of ['public','server','worker'])cpSync(new URL('../'+folder,import.meta.url),join(dir,folder),{recursive:true});mkdirSync(join(dir,'.openai'));writeFileSync(join(dir,'.openai/hosting.json'),JSON.stringify({d1:'DB'}));writeFileSync(join(dir,'package.json'),'{"type":"module"}');execFileSync(process.execPath,[new URL('../scripts/build-worker.mjs',import.meta.url).pathname,dir]);const {default:w}=await import(pathToFileURL(join(dir,'dist/server/index.js')));for(const path of ['/','/app.js','/payment.js'])assert.equal((await w.fetch(new Request('https://site.example'+path),{})).status,200);for(const path of ['/synthesis.js','/server/synthesis.js','/server/payments.js','/.env'])assert.equal((await w.fetch(new Request('https://site.example'+path),{})).status,404);const config=await(await w.fetch(new Request('https://site.example/api/payments/config'),{})).json();assert.equal(config.enabled,false);assert.equal(config.price,5000);assert.equal(config.label,'QPay');assert.equal((await w.fetch(new Request('https://site.example/api/payments/orders/'+('a'.repeat(32))+'/reading'),{})).status,503);}finally{rmSync(dir,{recursive:true,force:true});}});

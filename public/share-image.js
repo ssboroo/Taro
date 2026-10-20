@@ -1,4 +1,4 @@
-import {synthesisParagraphs} from './synthesis.js';
+import {synthesisParagraphs} from './synthesis-content.js';
 import {imageURL} from './deck.js';
 import {cardContent,formats,wrapText} from './share-content.js';
 const imageCache=new Map();

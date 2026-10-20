@@ -1,5 +1,5 @@
-import {deck,suits} from './deck.js';
-import {positions} from './engine.js';
+import {deck,suits} from '../public/deck.js';
+import {positions} from '../public/engine.js';
 const byId=new Map(deck.map(c=>[c.id,c]));
 // Editorial thematic index, not a historical table of fixed card combinations.
 export const themes={

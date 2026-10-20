@@ -1,7 +1,9 @@
+import {synthesize} from '../server/synthesis.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {cardContent,shareCaption,formats,wrapText} from '../public/share-content.js';
 const reading={count:3,question:'Миний нууц асуулт',note:'Нууц тэмдэглэл',cards:[{id:'ar17',reversed:false},{id:'ar19',reversed:true},{id:'pe04',reversed:false}]};
+reading.interpretation=synthesize(reading);
 test('share captions exclude private questions and notes by default',()=>{
  const text=shareCaption(reading);assert.ok(!text.includes(reading.question));assert.ok(!text.includes(reading.note));assert.ok(shareCaption(reading,{includeQuestion:true}).includes(reading.question));
 });

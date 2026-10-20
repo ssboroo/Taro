@@ -1,4 +1,4 @@
-import {synthesisParagraphs} from './synthesis.js';
+import {synthesisParagraphs} from './synthesis-content.js';
 import {deck} from './deck.js';
 import {commentary,suitContext} from './commentary.js';
 import {positions,prompts} from './engine.js';
