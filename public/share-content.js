@@ -1,3 +1,4 @@
+import {synthesisParagraphs} from './synthesis.js';
 import {deck} from './deck.js';
 import {commentary,suitContext} from './commentary.js';
 import {positions,prompts} from './engine.js';
@@ -11,6 +12,7 @@ export function cardContent(reading,index,full=false){
  return {card,reversed:entry.reversed,position:positions[reading.count][index],meaning,reflection:cm.reflection,paragraphs};
 }
 export function shareCaption(reading,{full=false,includeQuestion=false,index=null}={}){
+ if(index===null&&reading.count>1)return ['✧ RAINY ТАРОТ · НЭГДСЭН ДЭЛГЭЛТ',includeQuestion&&reading.question?'Миний асуулт: '+reading.question:'',...reading.cards.map((entry,i)=>{const c=cardContent(reading,i);return `${i+1}. ${c.position} — ${c.card.name} (${entry.reversed?'Урвуу':'Шулуун'})`;}),...synthesisParagraphs(reading,full).map(p=>p.label+'\n'+p.text),'https://rainy-tarot.ssboroostore.chatgpt.site'].filter(Boolean).join('\n\n');
  const indices=index===null?reading.cards.map((_,i)=>i):[index];
  return ['✧ RAINY ТАРОТ',includeQuestion&&reading.question?'Миний асуулт: '+reading.question:'',...indices.map(i=>{const c=cardContent(reading,i,full);return `${i+1}. ${c.position} — ${c.card.name} (${c.reversed?'Урвуу':'Шулуун'})\n${c.paragraphs.map(p=>`${p.label}: ${p.text}`).join('\n\n')}${full?'\nЭх: '+c.card.source:''}`;}),'Уламжлалт бэлгэдэл ба өөрийгөө таних эргэцүүлэл.','https://rainy-tarot.ssboroostore.chatgpt.site'].filter(Boolean).join('\n\n');
 }
