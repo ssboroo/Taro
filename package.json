@@ -7,7 +7,7 @@
     "start": "node server.mjs",
     "dev": "node server.mjs",
     "test": "node --test",
-    "check": "node --check public/app.js && node --check public/deck.js && node --check public/engine.js && node --check public/commentary.js && node --check public/scene-math.js && node --check public/scene.js && node --check public/immersive.js && node --check server.mjs"
+    "check": "node --check public/app.js && node --check public/deck.js && node --check public/engine.js && node --check public/commentary.js && node --check public/scene-math.js && node --check public/selection.js && node --check public/scene.js && node --check public/immersive.js && node --check server.mjs"
   },
   "engines": {
     "node": ">=22"
